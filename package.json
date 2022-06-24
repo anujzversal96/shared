@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "axios": "^0.27.2",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "mongodb": "^4.7.0",
@@ -12,13 +13,13 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "test": "jest",
-    "test:watch": "npm run test -- --watch"
+    "test": "jest"
   },
   "author": "Anuj",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@babel/preset-env": "^7.18.2",
     "jest": "^28.1.1"
   }
 }
