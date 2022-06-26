@@ -5,14 +5,14 @@ const user = require('../models/userSchema');
 
 
 module.exports.deleteEmployee =  (req,res) => {
-    const {_id} = req.body;
+  
+    const {_id} = req.params;
 
     if(_id.toString().length < 24 || _id.toString().length > 24)
     {
-        res.json("Please enter valid id");
+        res.status(500).json({message: "Please enter valid id"});
         return;
     }
-
 
 
 
@@ -20,13 +20,21 @@ module.exports.deleteEmployee =  (req,res) => {
         if(err)
         {
             console.log('Error ' + err);
-            res.status(400).json("Something went wrong, either id is not correct or record is already deleted");
+            res.status(500).json({message: 
+                "Something went wrong, either id is not correct or record is already deleted"});
             
         }
         else
         {
-            console.log(`User with name ${result.name} is deleted sucessfully`);
-            res.status(200).json(`User with ${result.name} is deleted sucessfully`);
+            if(result)
+            {
+            console.log(`User with name ${result?.name} is deleted sucessfully`);
+            res.status(200).json({message : `User with Name ${result?.name} is deleted sucessfully`});
+            }
+            else
+            {
+                res.status(404).json({message: `user doesn't exist`});
+            }
         }
    
        })

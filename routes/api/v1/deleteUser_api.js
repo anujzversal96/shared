@@ -4,7 +4,7 @@ const router = express.Router();
 
 const deleteEmployee = require('../../../controllers/deleteEmployee');
 
-router.delete('/', deleteEmployee.deleteEmployee);
+router.delete('/:_id', deleteEmployee.deleteEmployee);
 
 
 

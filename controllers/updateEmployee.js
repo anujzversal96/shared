@@ -5,7 +5,29 @@ const user = require('../models/userSchema');
 
 
 module.exports.updateEmployee =  (req,res) => {
-    const {_id,name,address,department,contactInfo} = req.body;
+
+    // body must not be empty.
+    if(Object.keys(req.body).length === 0)
+    {
+        res.status(500).json({message: "Empty body is not allowed."});
+        return;
+    }
+
+    var keys = Object.keys(req.body);
+
+
+    // check for all required body field must be present with valid value.
+    if(!(keys.includes("name") 
+    && keys.includes("address") 
+    && keys.includes("department") 
+    && keys.includes("contactInfo")))
+    {
+        res.status(500).json({message: "All required field must be present."});
+        return;
+    }
+
+    const {name,address,department,contactInfo} = req.body;
+    const {_id} = req.params;
 
     if(_id.toString().length < 24 || _id.toString().length > 24)
     {
@@ -13,26 +35,25 @@ module.exports.updateEmployee =  (req,res) => {
         return;
     }
 
-    const contactLength = contactInfo.toString().length;
 
-    if(Number.isInteger(parseInt(name)))
+    if(Number.isInteger(name) || name === "" || name === null || name === undefined)
     {
-        res.json("Enter valid name please.");
+        res.status(500).json({message: "There must be a valid name as string"});
         return;
     }
-    else if(Number.isInteger(parseInt(address)))
+    else if(Number.isInteger(address) || address === "" || address === null || address === undefined)
     {
-        res.json("Enter valid address please.");
+        res.status(500).json({message: "Enter valid address please."});
         return;
     }
-    else if(Number.isInteger(parseInt(department)))
+    else if(Number.isInteger(department) || department === "" || department === null || department === undefined)
     {
-        res.json("Enter valid department please.");
+        res.status(500).json({message: "Enter valid department please."});
         return;
     }
-    else if(isNaN(contactInfo) || contactLength < 10 || contactLength > 10)
+    else if(Number.isInteger(contactInfo) || contactInfo === "" || contactInfo === null || contactInfo === undefined ||contactInfo.length < 10 || contactInfo.length > 10) 
     {
-        res.json("Enter valid mobile number please");
+        res.status(500).json({message: "Enter valid 10 digit mobile number as string"});
         return;
     }
 
@@ -42,12 +63,22 @@ module.exports.updateEmployee =  (req,res) => {
         if(err)
         {
             console.log('Error ' + err);
-            res.status(400).json("Something went wrong, either id is not correct or record is already deleted");
+            res.status(500).json("Something went wrong, either id is not correct or record is already deleted");
             
         }
         else
         {
-            res.status(200).json("User updated successfully");
+
+            if(result)
+            {
+                res.status(200).json("Employee updated successfully.");
+            }
+            else
+            {
+                // if employee id doesn't match.
+                res.status(404).json("Employee doesn't exist.");
+            }
+            
 
             console.log(result)
         }

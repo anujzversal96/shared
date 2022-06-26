@@ -4,7 +4,7 @@ const router = express.Router();
 
 const fetchEmployee = require('../../../controllers/fetchEmployee');
 
-router.post('/', fetchEmployee.fetchEmployee);
+router.get('/', fetchEmployee.fetchEmployee);
 
 
 

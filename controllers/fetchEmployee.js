@@ -2,8 +2,6 @@
 
 const user = require('../models/userSchema');
 
-
-
 module.exports.fetchEmployee =  (req,res) => {
 
 
@@ -11,7 +9,8 @@ module.exports.fetchEmployee =  (req,res) => {
         if(err)
         {
             console.log('Error ' + err);
-            res.status(400).json("Something went wrong, either id is not correct or record is already deleted");
+            res.status(400).json({message: 
+                "Something went wrong, either id is not correct or record is already deleted"});
             
         }
         else

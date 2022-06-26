@@ -14,36 +14,38 @@ describe("fetchUsers", () => {
             "name": "Anuj",
             "address": "Chandigarh",
             "department": "Civil",
-            "contactInfo": 8628063948,
+            "contactInfo": "8628063948",
             "createdAt": "2022-06-23T12:19:19.509Z",
             "updatedAt": "2022-06-23T12:19:19.509Z",
             "__v": 0
         }
       ];
 
-      axios.post.mockResolvedValueOnce(users);
+      axios.get.mockResolvedValueOnce(users);
 
       // when
       const result = await fetchUsers();
 
       // then
-      expect(axios.post).toHaveBeenCalledWith(`${BASE_URL}/fetchEmployee/`);
+      expect(axios.get).toHaveBeenCalledWith(`${BASE_URL}/fetchEmployee`);
       expect(result).toEqual(users);
     });
   });
 
+
+
   describe("when API call fails", () => {
-    it("should return empty users list", async () => {
+    it("should return object with error users list", async () => {
       // given
       const message = "Network Error";
-      axios.post.mockRejectedValueOnce(new Error(message));
+      axios.get.mockRejectedValueOnce(new Error(message));
 
       // when
       const result = await fetchUsers();
 
       // then
-      expect(axios.post).toHaveBeenCalledWith(`${BASE_URL}/fetchEmployee/`);
-      expect(result).toEqual([]);
+      expect(axios.get).toHaveBeenCalledWith(`${BASE_URL}/fetchEmployee`);
+      expect(result).toEqual([{error: "error"}]);
     });
   });
 });
