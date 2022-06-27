@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+require("dotenv").config();
 
-mongoose.connect("mongodb+srv://ranaanuj290:anuj84710%40@cluster0.2icgk.mongodb.net/employeeDB", {
+mongoose.connect(process.env.MongoDB_Connection, {
     useNewUrlParser: true}
 );
 

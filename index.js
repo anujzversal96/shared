@@ -4,9 +4,11 @@ const mongoose = require('mongoose');
 const db = require('./config/mongoose');
 const app  = express(mongoose);
 
+
+
+
 app.use(cors());
 app.use(express.json());
-
 
 
 app.use('/', require('./routes'));
