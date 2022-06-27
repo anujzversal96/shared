@@ -6,6 +6,10 @@ const user = require('../models/userSchema');
 module.exports.registerUser =  (req,res) => {
 
 
+    try {
+        
+
+
     // check for empty body.
 
     if(Object.keys(req.body).length === 0)
@@ -49,19 +53,11 @@ module.exports.registerUser =  (req,res) => {
     }
 
  
-    //  let sql = "Insert into employees (name,address,department,contactInfo) values('" + name +"', '" + address +"', '" + department +"', '" + contactInfo +"'  )"
 
-    // con.query(sql,(err,result)=> {
-    //     if(err)
-    //     res.status(400).json("Error");
-
-    //     res.status(200).json({msg: "Data inerted successfully", result: result});
-
-    // });
+ /* Used MongoDB as DB with mongoose as ORM */
 
 
-
-
+ 
 
     user.create({
         name: name,
@@ -87,6 +83,33 @@ module.exports.registerUser =  (req,res) => {
         }
    
        })
+
+
+
+
+
+
+
+/* Used Mysql as DB  */
+
+
+    // let sql = "Insert into employees (name,address,department,contactInfo) values('" + name +"', '" + address +"', '" + department +"', '" + contactInfo +"'  )"
+
+    // con.query(sql,(err,result)=> {
+    //     if(err)
+    //     res.status(500).json("Error");
+
+    //     res.status(200).json({message: "Data inserted successfully", result: result});
+
+    // });
+
+
+} catch (error) {
+    
+    res.status(500).json({message: error});
+    console.log("message: " + error)
+        
+}
    
  
 }

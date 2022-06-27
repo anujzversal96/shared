@@ -1,10 +1,14 @@
 // const con = require('../config/mysql');
-
 const user = require('../models/userSchema');
 
 
 
 module.exports.updateEmployee =  (req,res) => {
+
+
+
+    try {
+        
 
     // body must not be empty.
     if(Object.keys(req.body).length === 0)
@@ -84,6 +88,27 @@ module.exports.updateEmployee =  (req,res) => {
         }
    
        }).lean();
+
+
+
+ 
+    
+    // let sql = "update employees set name = '"+ name +"', address = '"+ address +"', department = '"+ department +"', contactInfo = '"+ contactInfo +"' where _id = '" + _id + "'";
+
+    // con.query(sql,(err,result)=> {
+    //     if(err)
+    //     res.status(500).json("Error");
+
+    //     res.status(200).json({message: "Employees updated successfully", result});
+
+    // });
+
+} catch (error) {
+
+    console.log("Error: " + error);
+    res.status(500).json({message: error});
+        
+}
    
 
 }
